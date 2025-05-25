@@ -1,5 +1,4 @@
 class Gorilla extends Entity {
-  PImage sprite;
   float attackRange;
   float attackDamage;
   
@@ -10,13 +9,8 @@ class Gorilla extends Entity {
     speed = 2;
     attackRange = 50;
     attackDamage = 25;
-    loadSprite();
   }
   
-  void loadSprite() {
-    // Load gorilla sprite image
-    sprite = loadImage("gorilla.png");
-  }
   
   void update() {
     // Find nearest human
@@ -44,14 +38,26 @@ class Gorilla extends Entity {
   }
   
   void display() {
-    if (sprite != null) {
-      imageMode(CENTER);
-      image(sprite, position.x, position.y, size, size);
-    } else {
-      // Fallback shape if sprite not loaded
-      fill(100, 60, 20);
-      ellipse(position.x, position.y, size, size);
-    }
+    // Draw gorilla using shapes
+    pushMatrix();
+    translate(position.x, position.y);
+    
+    // Body
+    fill(100, 60, 20);
+    ellipse(0, 0, size, size);
+    
+    // Arms
+    ellipse(-size/2, 0, size/2, size/3);
+    ellipse(size/2, 0, size/2, size/3);
+    
+    // Head
+    ellipse(0, -size/3, size/2, size/2);
+    
+    // Face
+    fill(60, 30, 10);
+    ellipse(0, -size/3, size/3, size/3);
+    
+    popMatrix();
   }
   
   void attack(Human target) {

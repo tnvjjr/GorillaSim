@@ -1,18 +1,11 @@
 class Human extends Entity {
-  PImage sprite;
-  
   Human(float x, float y) {
     super(x, y);
     size = 20;
     health = 50;
     speed = 3;
-    loadSprite();
   }
   
-  void loadSprite() {
-    // Load human sprite image
-    sprite = loadImage("human.png");
-  }
   
   void update() {
     // Check for nearby gorillas
@@ -35,14 +28,26 @@ class Human extends Entity {
   }
   
   void display() {
-    if (sprite != null) {
-      imageMode(CENTER);
-      image(sprite, position.x, position.y, size, size);
-    } else {
-      // Fallback shape if sprite not loaded
-      fill(200, 150, 150);
-      ellipse(position.x, position.y, size, size);
-    }
+    // Draw human using shapes
+    pushMatrix();
+    translate(position.x, position.y);
+    
+    // Body
+    fill(200, 150, 150);
+    rect(-size/4, -size/4, size/2, size/2);
+    
+    // Head
+    ellipse(0, -size/2, size/2, size/2);
+    
+    // Arms
+    rect(-size/2, -size/4, size/4, size/3);
+    rect(size/4, -size/4, size/4, size/3);
+    
+    // Legs
+    rect(-size/4, size/4, size/4, size/3);
+    rect(0, size/4, size/4, size/3);
+    
+    popMatrix();
   }
   
   Gorilla findNearestGorilla() {
